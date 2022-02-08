@@ -1,8 +1,11 @@
 /* eslint-disable linebreak-style */
+import addCard from './utilits';
+
 export default class Cards {
   constructor() {
-    this.boxsCards = document.querySelectorAll('.task-box__content');
+    this.boxsCards = document.querySelectorAll('.task-box');
     this.btnsCreatCard = document.querySelectorAll('.task-box__btn');
+    this.addCard = addCard;
     this.boxNewCard = null;
   }
 
@@ -27,11 +30,13 @@ export default class Cards {
     if (this.boxNewCard === null) {
       e.target.classList.add('task-box__btn--none');
       this.showTextarea(e);
+      this.addCard();
       this.boxNewCard = '.new-card';
     } else if (this.boxNewCard !== null) {
       e.target.classList.add('task-box__btn--none');
       this.hidingTextarea();
       this.showTextarea(e);
+      this.addCard();
     }
   }
 
