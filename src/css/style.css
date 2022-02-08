@@ -1,0 +1,121 @@
+.body__container {
+  box-sizing: border-box;
+  background-color: rgb(68, 114, 241);
+  margin: 0 auto;
+  padding: 10px;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.task-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 380px;
+  border-radius: 5px;
+  background-color: rgb(231, 228, 228)
+}
+
+.task-box__title {
+  font-weight: bold;
+  padding: 10px;
+  align-self: flex-start;
+}
+
+.task-box__card {
+  box-shadow: 0px 4px 6px -2px rgba(0, 0, 0, 1);
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+  background-color: rgb(255, 255, 255);
+}
+
+.task-box__card:hover {
+  background-color: rgb(204, 204, 204);
+}
+
+.task-box__card-text {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.task-box__card-btn {
+  align-self: flex-start;
+  cursor: pointer;
+  text-align: right;
+  display: none;
+  font-size: 0;
+  min-width: 16px;
+  min-height: 16px;
+  background: no-repeat center;
+  background-image: url(../assets/close.png);
+}
+
+.task-box__card-btn--active {
+  display: inline-block;
+}
+
+.task-box__btn {
+  display: block;
+  font-size: 16px;
+  align-self: flex-start;
+  padding: 10px;
+  border: none;
+  background-color: inherit;
+  opacity: 0.6;
+}
+
+.task-box__btn:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  opacity: 1;
+}
+
+.task-box__btn--none {
+  display: none;
+}
+
+.new-card {
+  margin: 10px;
+}
+
+.new-card__text {
+  box-shadow: 0px 4px 6px -2px rgba(0, 0, 0, 1);
+  font-size: inherit;
+  font-family: inherit;
+  outline: none;
+  resize: none;
+  padding: 10px 15px;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 360px;
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(255, 255, 255);
+}
+
+.new-card__buttons {
+  display: flex;
+}
+
+.new-card__btn-add {
+  box-shadow: 0px 4px 6px -2px rgba(0, 0, 0, 1);
+  cursor: pointer;
+  border: none;
+  font-weight: bold;
+  color: white;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgb(36, 187, 36);
+}
+
+.new-card__btn-delet {
+  margin-left: 10px;
+  cursor: pointer;
+  background-color: inherit;
+  border: none;
+  font-size: 16px;
+  color: rgb(135, 145, 145);
+}
