@@ -115,15 +115,15 @@ export default class Cards {
       ghostEl = e.target.cloneNode(true);
       ghostEl.classList.add('task-box__card--dragged');
       document.body.appendChild(ghostEl);
-      ghostEl.style.left = `${e.pageX - ghostEl.offsetWidth / 2}px`;
-      ghostEl.style.top = `${e.pageX - ghostEl.offsetHeight / 2}px`;
+      ghostEl.style.left = `${e.pageX - ghostEl.offsetWidth}px`;
+      ghostEl.style.top = `${e.pageY - ghostEl.offsetHeight}px`;
     });
     itemsEl.addEventListener('mousemove', (e) => {
       if (!draggedEl) {
         return;
       }
-      ghostEl.style.left = `${e.pageX - ghostEl.offsetWidth / 2}px`;
-      ghostEl.style.top = `${e.pageX - ghostEl.offsetHeight / 2}px`;
+      ghostEl.style.left = `${e.pageX - ghostEl.offsetWidth}px`;
+      ghostEl.style.top = `${e.pageY - ghostEl.offsetHeight}px`;
     });
   }
 }
