@@ -103,27 +103,32 @@ export default class Cards {
   }
 
   dragAndDrops() {
-    let draggedEl = null;
-    let ghostEl = null;
-    const itemsEl = document.querySelector('.body__container');
-    itemsEl.addEventListener('mousedown', (e) => {
-      e.preventDefault();
-      if (!e.target.classList.contains('task-box__card')) {
-        return;
-      }
-      draggedEl = e.target;
-      ghostEl = e.target.cloneNode(true);
-      ghostEl.classList.add('task-box__card--dragged');
-      document.body.appendChild(ghostEl);
-      ghostEl.style.left = `${e.pageX - ghostEl.offsetWidth}px`;
-      ghostEl.style.top = `${e.pageY - ghostEl.offsetHeight}px`;
+    const draggedEl = null;
+    const ghostEl = null;
+    this.cards.forEach((item) => {
+      item.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+      });
     });
-    itemsEl.addEventListener('mousemove', (e) => {
-      if (!draggedEl) {
-        return;
-      }
-      ghostEl.style.left = `${e.pageX - ghostEl.offsetWidth}px`;
-      ghostEl.style.top = `${e.pageY - ghostEl.offsetHeight}px`;
-    });
+    // const itemsEl = document.querySelector('.body__container');
+    // itemsEl.addEventListener('mousedown', (e) => {
+    //   e.preventDefault();
+    //   if (!e.target.classList.contains('task-box__card')) {
+    //     return;
+    //   }
+    //   draggedEl = e.target;
+    //   ghostEl = e.target.cloneNode(true);
+    //   ghostEl.classList.add('task-box__card--dragged');
+    //   document.body.appendChild(ghostEl);
+    //   ghostEl.style.left = `${e.pageX - ghostEl.offsetWidth}px`;
+    //   ghostEl.style.top = `${e.pageY - ghostEl.offsetHeight}px`;
+    // });
+    // itemsEl.addEventListener('mousemove', (e) => {
+    //   if (!draggedEl) {
+    //     return;
+    //   }
+    //   ghostEl.style.left = `${e.pageX - ghostEl.offsetWidth}px`;
+    //   ghostEl.style.top = `${e.pageY - ghostEl.offsetHeight}px`;
+    // });
   }
 }
