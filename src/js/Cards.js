@@ -4,6 +4,10 @@ export default class Cards {
     this.btnsCreatCard = document.querySelectorAll('.task-box__btn');
     this.boxNewCard = null;
     this.cards = [...document.querySelectorAll('.task-box__card')];
+    this.cardsBoxs = [...document.querySelectorAll('.task-box')];
+    this.moveArea = document.querySelector('.body__container');
+    this.ghostEl = null;
+    this.deletElement = null;
   }
 
   init() {
@@ -79,6 +83,7 @@ export default class Cards {
       if (e.target.classList.contains('new-card__btn-delet')) {
         this.hidingTextarea();
         this.showBtnAdd();
+        this.cards = [...document.querySelectorAll('.task-box__card')];
         this.boxNewCard = null;
       }
       if (e.target.classList.contains('new-card__btn-add')) {
@@ -87,9 +92,10 @@ export default class Cards {
         const text = parent.querySelector('.new-card__text');
         const element = `
         <div class="task-box__card">
-          <div class="task-box__card-text"><span class="task-box__card-btn">close</span>
+          <div class="task-box__card-text">
           ${text.value}
           </div>
+          <div class="task-box__card-btn"></div>
         </div> `;
         boxContent.insertAdjacentHTML('beforeend', element);
         this.hidingTextarea();
@@ -103,32 +109,75 @@ export default class Cards {
   }
 
   dragAndDrops() {
-    const draggedEl = null;
-    const ghostEl = null;
     this.cards.forEach((item) => {
       item.addEventListener('mousedown', (e) => {
+        if (e.target.classList.contains('task-box__card-btn')) {
+          return;
+        }
         e.preventDefault();
+        this.deletElement = e.currentTarget;
+        this.deletBox = e.currentTarget.closest('.task-box__content');
+        this.ghostEl = e.currentTarget.cloneNode(true);
+        this.ghostEl.classList.add('task-box__card--dragged');
+        document.body.appendChild(this.ghostEl);
+        this.ghostEl.querySelector('.task-box__card-btn').classList.remove('task-box__card-btn--active');
+        this.ghostEl.style.left = `${e.pageX - this.ghostEl.offsetWidth / 2}px`;
+        this.ghostEl.style.top = `${e.pageY - this.ghostEl.offsetHeight / 2}px`;
       });
     });
-    // const itemsEl = document.querySelector('.body__container');
-    // itemsEl.addEventListener('mousedown', (e) => {
-    //   e.preventDefault();
-    //   if (!e.target.classList.contains('task-box__card')) {
-    //     return;
-    //   }
-    //   draggedEl = e.target;
-    //   ghostEl = e.target.cloneNode(true);
-    //   ghostEl.classList.add('task-box__card--dragged');
-    //   document.body.appendChild(ghostEl);
-    //   ghostEl.style.left = `${e.pageX - ghostEl.offsetWidth}px`;
-    //   ghostEl.style.top = `${e.pageY - ghostEl.offsetHeight}px`;
-    // });
-    // itemsEl.addEventListener('mousemove', (e) => {
-    //   if (!draggedEl) {
-    //     return;
-    //   }
-    //   ghostEl.style.left = `${e.pageX - ghostEl.offsetWidth}px`;
-    //   ghostEl.style.top = `${e.pageY - ghostEl.offsetHeight}px`;
-    // });
+    this.moveArea.addEventListener('mousemove', (e) => {
+      e.preventDefault();
+      if (this.ghostEl === null) {
+        return;
+      }
+      this.ghostEl.style.left = `${e.pageX - this.ghostEl.offsetWidth / 2}px`;
+      this.ghostEl.style.top = `${e.pageY - this.ghostEl.offsetHeight / 2}px`;
+      this.mouseUp();
+    });
+    this.moveArea.addEventListener('mouseleave', () => {
+      if (this.ghostEl === null) {
+        return;
+      }
+      document.body.removeChild(this.ghostEl);
+      this.ghostEl = null;
+    });
+  }
+
+  mouseUp() {
+    this.cardsBoxs.forEach((item) => {
+      item.addEventListener('mouseup', (e) => {
+        if (this.ghostEl === null) {
+          return;
+        }
+        const element = `
+        <div class="task-box__card">
+          <div class="task-box__card-text">
+          ${this.ghostEl.textContent}
+          </div>
+          <div class="task-box__card-btn"></div>
+        </div> `;
+        const content = e.currentTarget.querySelector('.task-box__content');
+        const closest = document.elementFromPoint(e.clientX, e.clientY);
+        if (content.children.length === 0) {
+          content.insertAdjacentHTML('afterbegin', element);
+          this.zeroingElement();
+        }
+        if (closest.classList.contains('task-box__card')) {
+          content.insertBefore(this.ghostEl, closest);
+          console.log(closest);
+        }
+      });
+    });
+  }
+
+  zeroingElement() {
+    this.cards = [...document.querySelectorAll('.task-box__card')];
+    this.deletCard();
+    this.dragAndDrops();
+    document.body.removeChild(this.ghostEl);
+    this.ghostEl = null;
+    this.deletBox.removeChild(this.deletElement);
+    this.deletBox = null;
+    this.deletElement = null;
   }
 }
